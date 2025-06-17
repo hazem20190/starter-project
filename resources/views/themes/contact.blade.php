@@ -35,27 +35,43 @@
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-9">
-                        <form action="#/" class="form-contact contact_form" action="contact_process.php" method="post"
+                        <form action="{{ route('contact.store') }}" class="form-contact contact_form" method="post"
                             id="contactForm" novalidate="novalidate">
+                            @csrf
+                            @if (session('status.contact'))
+                                <div class="alert alert-success text-center">{{ session('status.contact') }}</div>
+                            @endif
                             <div class="row">
                                 <div class="col-lg-5">
                                     <div class="form-group">
-                                        <input class="form-control" name="name" id="name" type="text"
-                                            placeholder="Enter your name">
+                                        <input class="form-control" name="name" type="text"
+                                            placeholder="Enter your name" value="{{ old('name') }}">
+                                        @error('name')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" name="email" id="email" type="email"
-                                            placeholder="Enter email address">
+                                        <input class="form-control" name="email" type="email"
+                                            placeholder="Enter email address" value="{{ old('email') }}">
+                                        @error('email')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" name="subject" id="subject" type="text"
-                                            placeholder="Enter Subject">
+                                        <input class="form-control" name="subject" type="text"
+                                            placeholder="Enter Subject" value="{{ old('subject') }}">
+                                        @error('subject')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-7">
                                     <div class="form-group">
-                                        <textarea class="form-control different-control w-100" name="message" id="message" cols="30" rows="5"
-                                            placeholder="Enter Message"></textarea>
+                                        <textarea class="form-control different-control w-100" name="message" cols="30" rows="5"
+                                            placeholder="Enter Message">{{ old('message') }}</textarea>
+                                        @error('message')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
